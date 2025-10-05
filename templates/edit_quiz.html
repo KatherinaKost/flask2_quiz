@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}Редактировать "{{ quiz.name }}"{% endblock %}
+
+{% block content %}
+<h2>Редактировать квиз: {{ quiz.name }}</h2>
+
+<form method="POST">
+    <label>
+        Название квиза:
+        <input type="text" name="quiz_name" value="{{ quiz.name }}" required>
+    </label>
+    <br><br>
+
+    <h3>Вопросы:</h3>
+    {% if quiz.question %}
+        {% for q in quiz.question %}
+        <div style="border: 1px solid #ddd; padding: 15px; margin: 15px 0; background: #f9f9f9;">
+            <label>
+                <input type="checkbox" name="keep_{{ q.id }}" checked> 
+                Сохранить этот вопрос
+            </label>
+            <br><br>
+
+            Вопрос:<br>
+            <textarea name="q_{{ q.id }}_text" rows="2" required>{{ q.question }}</textarea>
+            <br><br>
+
+            Правильный ответ:<br>
+            <input type="text" name="q_{{ q.id }}_ans" value="{{ q.answer }}" required>
+            <br><br>
+
+            Неправильный ответ 1:<br>
+            <input type="text" name="q_{{ q.id }}_w1" value="{{ q.wrong1 }}" required>
+            <br><br>
+
+            Неправильный ответ 2:<br>
+            <input type="text" name="q_{{ q.id }}_w2" value="{{ q.wrong2 }}" required>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>В этом квизе пока нет вопросов.</p>
+    {% endif %}
+    
+    <hr>
+<h3>Добавить новый вопрос</h3>
+
+    <div style="border: 1px solid #ddd; padding: 15px; margin: 15px 0; background: #f9f9f9;">
+        <label>
+            Текст вопроса:
+            <textarea name="new_question_text" rows="2" required></textarea>
+        </label>
+        <br><br>
+
+        <label>
+            Правильный ответ:
+            <input type="text" name="new_question_ans" required>
+        </label>
+        <br><br>
+
+        <label>
+            Неправильный ответ 1:
+            <input type="text" name="new_question_w1" required>
+        </label>
+        <br><br>
+
+        <label>
+            Неправильный ответ 2:
+            <input type="text" name="new_question_w2" required>
+        </label>
+    </div>
+    
+    <button type="submit">Сохранить изменения</button>
+</form>
+{% endblock %}

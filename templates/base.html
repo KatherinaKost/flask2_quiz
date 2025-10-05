@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}КВИЗ{% endblock %}</title>
+    <!-- Подключаем внешний CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    {% set has_secondary = self.content2() | trim != '' %}
+    <div class="page-grid{% if has_secondary %} with-secondary{% endif %}">
+        <!-- Шапка -->
+        <header class="page-header">
+            <nav>
+                <a href="{{ url_for('view_quiz') }}">Главная</a>
+                {% if session.user_id %}
+                    <a href="{{ url_for('my_quizes') }}">Мои квизы</a>
+                    <a href="{{ url_for('create_quiz') }}">Создать квиз</a>
+                    <a href="{{ url_for('logout') }}">Выйти</a>
+                {% else %}
+                <a href="{{ url_for('login') }}">Войти</a>
+                 {% endif %}
+            </nav>
+        </header>
+
+        <!-- Основной контент -->
+        <main class="page-main">
+            {% block content %}
+            {% endblock %}
+        </main>
+
+        {% if has_secondary %}
+            <aside class="page-secondary">
+                {% block content2 %}{% endblock %}
+            </aside>
+        {% endif %}
+
+        <!-- Футер -->
+        <footer class="page-footer">
+            <p>&copy; 2025 Мой КВИЗ</p>
+        </footer>
+    </div>
+</body>
+</html>

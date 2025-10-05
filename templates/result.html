@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Результаты квиза{% endblock %}
+
+{% block content %}
+<div class="result-card">
+    <h1>Квиз завершён!</h1>
+    
+    <div class="result-stats">
+        <p>Правильных ответов: <strong>{{ right }} из {{ total }}</strong></p>
+    </div>
+
+    <div class="result-actions">
+        <a href="{{ url_for('view_quiz') }}" class="btn">Пройти другой квиз</a>
+    </div>
+</div>
+{% endblock %}

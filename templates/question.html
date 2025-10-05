@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Вопрос {{ session.question_n + 1 }}{% endblock %}
+
+{% block content %}
+<div class="question-card">
+    <h2>Вопрос {{ session.question_n + 1 }}</h2>
+    <p class="question-text">{{ question.question}}</p>
+
+    <form method="POST" action="{{ url_for('viev_question') }}">
+        {% for ans in answer %}
+            <label class="answer-option">
+                <input type="radio" name="answer" value="{{ ans }}" required>
+                {{ ans }}
+            </label>
+        {% endfor %}
+        <button type="submit" class="btn">Ответить</button>
+    </form>
+    </div>
+    {% endblock %}

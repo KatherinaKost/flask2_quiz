@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Выбрать пользователя{% endblock %}
+
+{% block content %}
+        <h1>Выбрать пользователя</h1>
+        {% for user in users %}   
+        <form method="POST" style="margin: 8px 0;">
+            <input type="hidden" name="user_id" value="{{ user.id }}">
+            <button type="submit">{{ user.name }}</button>
+        </form>
+        {% else %}
+            <p>Пользователи не найдены.</p>
+        {% endfor %}
+    </form>
+    </div>
+    {% endblock %}

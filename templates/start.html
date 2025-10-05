@@ -1,0 +1,20 @@
+<!-- Наследуем от базового шаблона -->
+{% extends "base.html" %}
+
+{% block title %}Выберите квиз{% endblock %}
+
+{% block content %}
+<div class="quiz-selector">
+    <h1>Выберите квиз</h1>
+    <form method="POST" action="{{ url_for('view_quiz') }}">
+        <label for="quiz">Квизы:</label>
+        <select name="quiz" id="quiz" required>
+            <option value="">-- Выберите --</option>
+            {% for quiz in quizes %}
+                <option value="{{ quiz.id }}">{{ quiz.name }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn">Начать квиз</button>
+    </form>
+</div>
+{% endblock %}

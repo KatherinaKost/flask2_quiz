@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Мои квизы{% endblock %}
+
+{% block content %}
+<h2>Мои квизы</h2>
+
+{% if quizes %}
+    <ul>
+    {% for quiz in quizes %}
+        <li>
+            <strong>{{ quiz.name }}</strong>
+            ({{ quiz.question|length }} вопросов)
+            <br>
+            <a href="{{ url_for('edit_quiz', quiz_id=quiz.id) }}">Редактировать</a>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>У вас пока нет квизов.</p>
+{% endif %}
+{% endblock %}
