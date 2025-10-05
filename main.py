@@ -19,10 +19,10 @@ db.init_app(app)  #связывается  приложение с бд
 
 with app.app_context(): #запуск приложения
     add_data()          #в приложении выполняется функция по дбавлению данных в бд
-    quizes = Quiz.query.all() #query метод в db.Model который дает нам данные из дб
+    """ quizes = Quiz.query.all() #query метод в db.Model который дает нам данные из дб
     print(quizes[1].question)
     quiz = Quiz.query.all()
-    print(quiz[0])
+    print(quiz[0]) """
     
 
 
