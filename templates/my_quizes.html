@@ -12,6 +12,9 @@
             ({{ quiz.question|length }} вопросов)
             <br>
             <a href="{{ url_for('edit_quiz', quiz_id=quiz.id) }}">Редактировать</a>
+            <form method="POST" action="{{ url_for('delete_quiz', quiz_id=quiz.id) }}" style="display:inline;">
+                <button type="submit" onclick="return confirm('Удалить квиз?')">Удалить</button>
+            </form>
         </li>
     {% endfor %}
     </ul>

@@ -42,6 +42,7 @@ def viev_question():
     if not session['quiz.id'] or session['quiz.id'] == -1:
         return redirect(url_for('view_quiz'))
 
+
     if request.method == 'POST': # если пост значит ответ на вопрос 
         question = Question.query.filter_by(id=session['question_id'])[0]  #так как в GET мы запомнили айди вопроса теперь для формы мы запоминаем именно этот вопрос, на который дается ответ
         if question.answer == request.form.get('answer'):   #в чтмл прописать answer #именно этот вопрос по айди мы просматриваем ответ
@@ -103,17 +104,17 @@ def edit_quiz(quiz_id):
         kept_question = []
 
         for question in quiz.question:
-            if request.form.get(f'keep_{q.id }') == 'on':
-                kept_question.append(q.id)      #добавляем сохраненные галочкой вопросы (их айди) которые не нужно удалять
+            if request.form.get(f'keep_{question.id}') == 'on':
+                kept_question.append(question.id)      #добавляем сохраненные галочкой вопросы (их айди) которые не нужно удалять
 
         for question in quiz.question:
             if question.id in kept_question:
-                question.question = request.form.get(f'q_{ q.id }_text', question.question).strip()
-                question.answer = request.form.get(f'q_{ q.id }_ans', question.answer).strip()
+                question.question = request.form.get(f'q_{question.id}_text', question.question).strip()
+                question.answer = request.form.get(f'q_{question.id}_ans', question.answer).strip()
                 question.wrong1 = request.form.get(f'q_{question.id}_w1', question.wrong1).strip()
                 question.wrong2 = request.form.get(f'q_{question.id}_w2', question.wrong2).strip()
             else:
-                quiz.question.remove(question) #удаляем вопросы
+                db.session.delete(question) #удаляем вопросы
 
         new_q_text = request.form.get('new_question_text', '').strip()
         new_q_ans = request.form.get('new_question_ans', '').strip()
@@ -150,6 +151,19 @@ def create_quiz():
 
         return redirect(url_for('edit_quiz', quiz_id=new_quiz.id))
     return render_template('create_quiz.html')
+
+@app.route('/delete-quiz/<int:quiz_id>/', methods=['POST'])
+def delete_quiz(quiz_id):
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    
+    quiz = Quiz.query.get(quiz_id)
+    if not quiz or quiz.user_id != session['user_id']:
+        return redirect(url_for('my_quizes'))
+    
+    db.session.delete(quiz)  # cascade='all, delete-orphan' удалит и вопросы
+    db.session.commit()
+    return redirect(url_for('my_quizes'))
 
 @app.route('/logout/')
 def logout():
