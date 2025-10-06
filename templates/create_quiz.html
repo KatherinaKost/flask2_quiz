@@ -5,12 +5,16 @@
 <h2>Создать квиз</h2>
 
 <form method="POST">
-    <label>
-        Название квиза:
-        <input type="text" name="name"  required>
-    </label>
-    <br><br>
-
-    <button type="submit">Сохранить квиз</button>
+    <fieldset class="quiz-form-fieldset">
+        <legend class="quiz-form-legend">Название квиза</legend>
+        
+        <label for="quiz-name" class="quiz-form-label">
+            Введите название:
+        </label>
+        <input type="text" id="quiz-name" name="name" class="quiz-form-input">
+        
+        <button type="submit" class="quiz-form-button">Сохранить квиз</button>
+    </fieldset>
 </form>
+
 {% endblock %}
